@@ -1,0 +1,38 @@
+
+services:
+  postgres:
+    image: postgres:10
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  spring-boot-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.spring
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/demo
+      SPRING_DATASOURCE_USERNAME: demo
+      SPRING_DATASOURCE_PASSWORD: demo
+      APP_NODE_URL: http://node-app:8081
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  node-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "8081:8081"
+    depends_on:
+      - spring-boot-app
+
+volumes:
+  pgdata:

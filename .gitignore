@@ -1,0 +1,18 @@
+# Java
+target/
+*.log
+
+# Node
+node_modules/
+dist/
+
+# VSCode
+.vscode/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Docker
+**/.env
+**/pgdata/

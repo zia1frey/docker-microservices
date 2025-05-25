@@ -1,0 +1,19 @@
+FROM node:9.9.0
+
+# Setuj radni folder gde će se klonirati ceo repozitorijum
+WORKDIR /usr/src/app
+
+# Kloniraj ceo repo
+RUN git clone https://github.com/kkenan/basic-microservices.git .
+
+# Pređi u folder sa Node app-om
+WORKDIR /usr/src/app/node-app
+
+# Instaliraj dependencies
+RUN npm install
+
+# Otvori port na kojem app sluša (8081)
+EXPOSE 8081
+
+# Startuj aplikaciju
+CMD ["node", "index.js"]
